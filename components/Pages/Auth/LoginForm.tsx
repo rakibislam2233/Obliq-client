@@ -1,9 +1,10 @@
 "use client";
+import { Checkbox } from "@/components/ui/checkbox";
+import { FormInput } from "@/components/ui/form-input";
 import { AuthActionState, loginUser } from "@/services/auth.service";
 import { Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Checkbox } from "radix-ui";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -48,52 +49,39 @@ export default function LoginForm() {
       {/* Form */}
       <form action={formAction} className="space-y-5">
         {/* Email Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
-            <input
-              type="email"
-              name="email"
-              placeholder="your@email.com"
-              defaultValue={state?.inputs?.email ?? ""}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-              required
-            />
-          </div>
-          {state?.errors?.email && (
-            <p className="text-red-500 text-sm mt-1">{state.errors.email[0]}</p>
-          )}
-        </div>
+        <FormInput
+          id="email"
+          name="email"
+          type="email"
+          label="Email"
+          icon={Mail}
+          defaultValue={state?.inputs?.email ?? undefined}
+          placeholder="Enter your email"
+          error={state?.errors?.email}
+          required
+        />
 
         {/* Password Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Password
-          </label>
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              defaultValue={state?.inputs?.password ?? ""}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-              required
-            />
-          </div>
-          {state?.errors?.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {state.errors.password[0]}
-            </p>
-          )}
-        </div>
+        <FormInput
+          id="password"
+          name="password"
+          type="password"
+          label="Password"
+          icon={Lock}
+          defaultValue={state?.inputs?.password ?? undefined}
+          placeholder="Enter your password"
+          error={state?.errors?.password}
+          required
+        />
 
         {/* Forgot Password */}
-        <div className="text-right">
-
+        <div className="flex items-center justify-between">
+          <div className="flex gap-1 items-center">
+          <Checkbox id="remember" name="remember" className="mr-1" />
+          <label htmlFor="remember" className="text-sm text-gray-600">
+            Remember me
+          </label>
+          </div>
           <Link
             href="/forgot-password"
             className="text-sm text-orange-500 hover:text-orange-600 font-medium"
