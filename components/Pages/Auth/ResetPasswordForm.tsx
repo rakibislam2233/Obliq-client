@@ -1,5 +1,4 @@
 "use client";
-import Logo from "@/components/Shared/Navbar/Logo";
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
 import { AuthActionState, resetPassword } from "@/services/auth.service";
@@ -42,9 +41,6 @@ export default function ResetPasswordForm() {
   return (
     <div className="w-full max-w-md mx-auto p-8 border border-gray-100 bg-white rounded">
       <div className="flex flex-col items-center mb-6">
-        <Link href="/" className="flex items-center justify-center gap-1 mb-6">
-          <Logo />
-        </Link>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Reset Password
         </h1>
