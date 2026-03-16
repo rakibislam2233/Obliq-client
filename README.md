@@ -213,3 +213,179 @@ This project is licensed under the MIT License.
 ## Author
 
 Built with love using Next.js, TypeScript, and shadcn/ui.
+
+## Implementation Guide: Permission-Based Route Guards
+
+### 1. Backend API Contract Expected
+
+Frontend expects backend to provide:
+
+**Login Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "uuid",
+      "email": "user@example.com",
+      "fullName": "User Name",
+      "status": "ACTIVE",
+      "role": { "id": "uuid", "name": "MANAGER" }
+    },
+    "permissions": ["view:dashboard", "view:users", "create:leads"],
+    "tokens": {
+      "accessToken": "jwt...",
+      "refreshToken": "jwt..."
+    }
+  }
+}
+```
+
+**GET /auth/me:**
+```json
+{
+  "success": true,
+  "data": {
+    "user": {...},
+    "permissions": [...]
+  }
+}
+```
+
+### 2. Route-Permission Map
+
+Create `lib/permissions.ts`:
+
+```typescript
+export const PUBLIC_ROUTES = ['/login', '/register', '/forgot-password'];
+
+export const ROUTE_PERMISSION_MAP: Record<string, string> = {
+  '/dashboard': 'view:dashboard',
+  '/users': 'view:users',
+  '/users/create': 'create:users',
+  '/leads': 'view:leads',
+  '/tasks': 'view:tasks',
+  '/reports': 'view:reports',
+  '/audit': 'view:audit',
+};
+
+export function hasPermission(
+  userPermissions: string[],
+  requiredAtom: string
+): boolean {
+  return userPermissions.includes(requiredAtom);
+}
+
+export function getRequiredPermission(path: string): string | null {
+  return ROUTE_PERMISSION_MAP[path] || null;
+}
+```
+
+### 3. Middleware: Route Guard
+
+Create `middleware.ts` in project root:
+
+```typescript
+import { NextRequest, NextResponse } from 'next/server';
+import { getCookie } from '@/utils/tokenHandlers';
+import { api } from '@/services/api';
+import { PUBLIC_ROUTES, ROUTE_PERMISSION_MAP, hasPermission } from '@/lib/permissions';
+
+export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  if (PUBLIC_ROUTES.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  const accessToken = await getCookie('accessToken');
+  if (!accessToken) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  const userPermissions = await getUserPermissions(accessToken);
+  if (!userPermissions) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  const requiredPermission = ROUTE_PERMISSION_MAP[pathname];
+  if (requiredPermission && !hasPermission(userPermissions, requiredPermission)) {
+    return NextResponse.rewrite(new URL('/403', request.url), { status: 403 });
+  }
+
+  return NextResponse.next();
+}
+
+async function getUserPermissions(accessToken: string): Promise<string[] | null> {
+  try {
+    const response = await api.get('/auth/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return response.success && response.data.permissions ? response.data.permissions : null;
+  } catch {
+    return null;
+  }
+}
+
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|public).*)'],
+};
+```
+
+### 4. Component Permission Hook
+
+Create `lib/usePermissions.ts`:
+
+```typescript
+'use client';
+
+import { useCallback } from 'react';
+
+export function usePermissions() {
+  const canAccess = useCallback((requiredAtom: string): boolean => {
+    const permissions = getStoredPermissions();
+    return permissions.includes(requiredAtom);
+  }, []);
+
+  return { canAccess };
+}
+
+function getStoredPermissions(): string[] {
+  // Store in Context/Zustand based on your setup
+  return [];
+}
+```
+
+### 5. 403 Page
+
+Create `app/403.tsx`:
+
+```typescript
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+
+export default function Forbidden() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold text-gray-900">403</h1>
+        <h2 className="text-2xl font-semibold text-gray-700">Access Denied</h2>
+        <p className="text-gray-600 max-w-md">
+          You do not have permission to access this resource.
+        </p>
+        <Link href="/dashboard">
+          <Button>Back to Dashboard</Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+```
+
+### Key Points
+
+- Middleware blocks routes before render if permission is missing.
+- One permission atom per protected route.
+- Component-level hooks check action permissions (create, edit, delete).
+- No permission → 403 page is served.
+- Store resolved permissions in Context or Zustand for client-side access.

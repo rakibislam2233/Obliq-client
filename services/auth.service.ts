@@ -2,6 +2,7 @@
 "use server";
 import { ActionState } from "@/interface/action-state.interface";
 import { api } from "@/services/api";
+import { clearUserPermissions, storeUserPermissions } from "@/utils/permissions";
 import { deleteCookie, getCookie, setCookie } from "@/utils/tokenHandlers";
 import {
   forgotPasswordValidationSchema,
@@ -57,6 +58,11 @@ export async function loginUser(
         maxAge: 3600 * 24 * 90,
         path: "/",
       });
+    }
+
+    // 2. Store user permissions for route gating
+    if (loginData?.permissions && Array.isArray(loginData.permissions)) {
+      await storeUserPermissions(loginData.permissions);
     }
     return {
       success: true,
@@ -295,6 +301,7 @@ export async function logoutUser() {
     await deleteCookie("accessToken");
     await deleteCookie("refreshToken");
     await deleteCookie("userRole");
+    await clearUserPermissions();
   }
   return { success: true };
 }
