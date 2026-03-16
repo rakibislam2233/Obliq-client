@@ -163,7 +163,6 @@ export async function resetPassword(
     };
   }
 }
-
 export async function getNewAccessToken() {
   try {
     const accessToken = await getCookie("accessToken");
@@ -205,7 +204,6 @@ export async function getNewAccessToken() {
     throw error;
   }
 }
-
 export async function resendOtp(
   prevState: AuthActionState,
   formData: FormData,
@@ -244,7 +242,6 @@ export async function resendOtp(
     };
   }
 }
-
 export async function changePassword(
   prevState: AuthActionState,
   formData: FormData,
@@ -285,7 +282,6 @@ export async function changePassword(
     };
   }
 }
-
 // Logout
 export async function logoutUser() {
   try {

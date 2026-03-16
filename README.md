@@ -1,194 +1,215 @@
-# Storify - Subscription-based File & Folder Management System
+# Obliq Frontend
 
-![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Shadcn UI](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)
+<p align="left">
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/shadcn/ui-Components-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui" />
+  <img src="https://img.shields.io/badge/Zod-Validation-3E67B1?style=for-the-badge&logo=zod&logoColor=white" alt="Zod" />
+</p>
 
-## 📌 Project Overview
+Dynamic, permission-driven RBAC web client for the Obliq platform.
 
-**Storify** is a full-featured, subscription-based file and folder management system that simulates a real-world SaaS storage product. The system allows administrators to define and manage tiered subscription packages (Free, Silver, Gold, Diamond) that strictly control how each user interacts with their storage.
+## Overview
 
-The platform enforces package-level restrictions across every user action, including:
-- **Folder Nesting Depth:** Maximum depth users can nest folders within their subscription tier
-- **File Type Restrictions:** Which file types users are allowed to upload based on their package
-- **File Size Limits:** Maximum file size allowed per upload
-- **Folder & File Quotas:** Total number of folders and files allowed per user
-- **Per-Folder Limits:** Maximum files/folders allowed within a single folder
+Obliq uses dynamic permissions, not hard-coded role pages.
 
-All business rules are defined dynamically by the admin rather than hardcoded into the application, providing flexibility to adjust subscription benefits without code changes.
+- A page is accessible only if the user has the required permission atom.
+- Menus and actions are rendered from effective permissions at runtime.
+- Role label provides context, but authorization is permission-first.
 
-## ✨ Features
+This frontend is built with Next.js App Router + TypeScript and is designed to enforce RBAC behavior end-to-end at the UI level.
 
-### For Admins
+## Why Obliq
 
-- **Package Management:** Create, update, and delete subscription packages (Free, Silver, Gold, Diamond)
-- **Tier Configuration:** Define storage limits, file restrictions, and nesting depths per package
-- **User Management:** View and manage all users and their subscription status
-- **Dashboard Analytics:** Monitor storage usage, active subscriptions, and system metrics
-- **Dynamic Business Rules:** Configure all restrictions from the admin panel without code changes
+Traditional systems lock features by role and require code changes for access updates.
 
-### For Users
+Obliq allows Admin/Manager users to configure access from UI while enforcing the grant ceiling rule:
 
-- **File Management:** Upload, download, rename, move, and delete files
-- **Folder Management:** Create, rename, move, and delete folders with enforced nesting limits
-- **Storage Dashboard:** View current storage usage and quota limits
-- **Package Upgrade:** View available subscription tiers and upgrade options
-- **Search & Filter:** Easily find files and folders with search functionality
-- **File Preview:** Preview supported file types before downloading
+- Users cannot grant permissions they do not have.
+- Access can be granted/revoked without redeploying frontend logic.
+- Sensitive management activity is intended to be reflected through backend audit logs.
 
-## 🛠️ Tech Stack
+## Roles
 
-### Frontend
+| Role | Primary Responsibility |
+| --- | --- |
+| Admin | Full platform control, permission governance, global visibility |
+| Manager | Team-level management, scoped user and permission control |
+| Agent | Work inside modules enabled by Manager/Admin |
+| Customer | Self-service portal access with strict boundaries |
 
-- **Framework:** [Next.js](https://nextjs.org/) (App Router)
-- **Library:** [React.js](https://react.dev/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/) for robust and type-safe code
-- **Styling UI:** Tailwind CSS and [Shadcn UI](https://ui.shadcn.com/) for beautifully designed, accessible, and customizable components
-- **State Management:** React Context API / Zustand
-- **API Client:** Axios / Fetch API
+## Technology Stack
 
-### Backend (Recommended)
+### Core Technologies
 
-- **Runtime:** Node.js
-- **Framework:** Express.js / NestJS
-- **Database:** PostgreSQL / MongoDB
-- **ORM:** Prisma / Mongoose
-- **Authentication:** JWT / NextAuth.js
-- **File Storage:** Local / AWS S3 / Cloudinary
+| Layer | Technology | Purpose |
+| --- | --- | --- |
+| Framework | Next.js (App Router) | Routing, SSR, middleware-based authorization gates |
+| UI Library | React 19 | Component-driven UI |
+| Language | TypeScript | Type-safe app logic and contracts |
+| Styling | Tailwind CSS 4 | Utility-first responsive styling |
+| Component System | shadcn/ui + Radix | Accessible, composable UI primitives |
+| Validation | Zod | Form and payload validation |
+| Motion | Framer Motion | UI transitions and interactive feedback |
+| API Layer | Native fetch wrapper | Centralized request/response handling |
 
-## 🚀 Getting Started
+### Visual Tech Logos
 
-### Prerequisites
+<p>
+  <img src="https://cdn.simpleicons.org/nextdotjs/000000" alt="Next.js" height="28" />
+  <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" height="28" />
+  <img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript" height="28" />
+  <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS" height="28" />
+  <img src="https://cdn.simpleicons.org/zod/3E67B1" alt="Zod" height="28" />
+  <img src="https://cdn.simpleicons.org/framer/0055FF" alt="Framer Motion" height="28" />
+</p>
 
-Make sure you have the following installed on your machine:
+## RBAC Design Principles
 
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- npm, yarn, pnpm, or bun
-- Git
+- One protected route maps to one required permission atom.
+- Middleware should block access before protected page render.
+- UI must hide or disable actions without required permissions.
+- Manager grants are capped by Manager's own effective permissions.
+- Customers remain isolated unless explicit permission allows otherwise.
 
-### Installation
+## Frontend Scope
 
-1. **Clone the repository:**
+- Auth flows: login, forgot password, reset password, OTP verification.
+- Permission-aware route gating (middleware-driven).
+- Dynamic sidebar/menu built from permission set.
+- Module surfaces: dashboard, users, leads, tasks, reports, audit, settings.
 
-   ```bash
-   git clone <your-repo-url>
-   cd obliq-client
-   ```
+## Project Structure
 
-2. **Install dependencies:**
+```text
+obilq-client/
+├── app/
+│   ├── (auth)/
+│   │   ├── forgot-password/page.tsx
+│   │   ├── login/page.tsx
+│   │   ├── register/page.tsx
+│   │   ├── reset-password/page.tsx
+│   │   ├── verify-email/page.tsx
+│   │   └── verify-otp/page.tsx
+│   ├── error.tsx
+│   ├── layout.tsx
+│   └── not-found.tsx
+├── components/
+│   ├── Pages/Auth/
+│   ├── Shared/
+│   └── ui/
+├── interface/
+├── lib/
+├── services/
+├── utils/
+└── validation/
+```
 
-   ```bash
-   npm install
-   # or yarn install / pnpm install
-   ```
+## Environment
 
-3. **Set up environment variables:**
-   
-   Create a `.env.local` file in the root directory with the following variables:
+Create .env.local in root:
 
-   ```env
-   NEXT_PUBLIC_API_URL=http://localhost:8000/api
-   NEXT_PUBLIC_APP_NAME=Storify
-   ```
+```env
+NEXT_PUBLIC_BASE_API_URL=http://localhost:5000/api/v1
+```
 
-### Running the Application
+This variable is used by services/api.ts.
 
-To start the Next.js development server:
+## Quick Start
+
+1. Install dependencies.
+
+```bash
+npm install
+```
+
+2. Start development server.
 
 ```bash
 npm run dev
-# or yarn dev
-# or pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
+3. Open app.
 
-## 🏗️ Code Organization
+http://localhost:3000
 
-The frontend project is structured for scalability and maintainability:
+## NPM Scripts
 
-```text
-obliq-client/
-├── app/                  # Next.js App Router root
-│   ├── (auth)/           # Authentication routes (login, register, forgot-password)
-│   ├── (main)/           # Public main pages (Home, About, Pricing)
-│   ├── admin/            # Admin dashboard and package management
-│   ├── dashboard/        # User dashboard for file/folder management
-│   ├── globals.css       # Global Tailwind CSS styles
-│   ├── layout.tsx        # Root application layout
-│   └── not-found.tsx     # Custom 404 error page
-├── components/           # Reusable UI components
-│   ├── admin/            # Admin-specific components
-│   ├── dashboard/        # Dashboard widgets and file/folder components
-│   ├── shared/           # Global shared components (Navbar, Footer, Sidebar)
-│   └── ui/               # Base Shadcn UI components (button, dialog, etc.)
-├── data/                 # Static data and configurations
-├── interface/            # TypeScript interfaces and types
-├── lib/                  # Utility functions and helpers
-├── services/             # API integration and external communications
-│   ├── api.ts            # Base API client and fetch wrapper
-│   ├── auth.service.ts   # Authentication-related API functions
-│   ├── file.service.ts   # File management API functions
-│   └── package.service.ts # Subscription package API functions
-├── public/               # Static public assets
-├── .env.local            # Environment variables
-├── components.json       # Shadcn UI configuration
-├── next.config.ts        # Next.js configuration
-├── package.json          # Project dependencies
-├── tailwind.config.ts    # Tailwind CSS configuration
-└── tsconfig.json         # TypeScript configuration
+- npm run dev: start dev server (experimental HTTPS).
+- npm run build: create production build.
+- npm run start: run production build.
+- npm run lint: lint the codebase.
+
+## Auth and Session Strategy
+
+- Access and refresh tokens are handled through httpOnly cookies.
+- No localStorage token storage.
+- Refresh flow is integrated via auth/refresh in services/auth.service.ts.
+- Logout clears cookies and attempts backend session invalidation.
+
+## API Contract Expectation
+
+Expected response envelope from backend services:
+
+```json
+{
+  "success": true,
+  "message": "...",
+  "data": {},
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 100,
+    "totalPages": 10
+  }
+}
 ```
 
-## 📋 Subscription Tiers
+## Example Permission Atoms
 
-| Feature | Free | Silver | Gold | Diamond |
-|---------|------|--------|------|---------|
-| Storage Space | 1 GB | 10 GB | 50 GB | 500 GB |
-| Max File Size | 10 MB | 100 MB | 500 MB | 2 GB |
-| Max Folder Depth | 3 | 5 | 10 | Unlimited |
-| Max Files | 100 | 1,000 | 10,000 | Unlimited |
-| Max Folders | 10 | 100 | 1,000 | Unlimited |
-| Allowed File Types | Basic | Extended | All | All + Premium |
+- dashboard.view
+- users.read
+- users.create
+- users.update
+- users.suspend
+- users.ban
+- leads.read
+- tasks.manage
+- reports.view
+- audit.read
+- settings.manage
 
-*Note: All limits are configurable by the admin through the dashboard.*
+Final atom catalog should come from backend permission master.
 
-## 🎯 Key Features
+## Delivery Standards
 
-### Admin Features
+- Figma-first implementation for screens and states.
+- Unauthorized users see proper 403 behavior.
+- Both page-level and action-level checks are enforced.
+- UX avoids dead-end actions by hiding/disabling unauthorized controls.
 
-1. **Package Management:** Full CRUD operations for subscription packages
-2. **Dynamic Restrictions:** Configure all limits without code changes
-3. **User Oversight:** View and manage all user accounts
-4. **Analytics Dashboard:** Monitor system usage and revenue metrics
+## Security & Enforcement
 
-### User Features
+- Server-Side Validation: All restrictions enforced at the API level.
+- Authentication: Secure JWT-based authentication system.
+- Authorization: Role-based access control (Admin/User).
+- File Validation: File type and size validation before upload.
+- Quota Checking: Real-time quota validation on every operation.
 
-1. **File Operations:** Upload, download, rename, move, delete with restriction enforcement
-2. **Folder Operations:** Create nested folders within tier limits
-3. **Storage Management:** Real-time quota tracking and usage visualization
-4. **Subscription Management:** View and upgrade packages seamlessly
+## UI/UX Highlights
 
-## 🔐 Security & Enforcement
+- Responsive Design: Fully responsive across all devices.
+- Modern Interface: Clean, intuitive design using shadcn/ui components.
+- Real-Time Feedback: Instant validation messages and error handling.
+- Loading States: Smooth loading indicators and skeleton screens.
+- Toast Notifications: User-friendly feedback for all actions.
 
-- **Server-Side Validation:** All restrictions enforced at the API level
-- **Authentication:** Secure JWT-based authentication system
-- **Authorization:** Role-based access control (Admin/User)
-- **File Validation:** File type and size validation before upload
-- **Quota Checking:** Real-time quota validation on every operation
-
-## 🎨 UI/UX Highlights
-
-- **Responsive Design:** Fully responsive across all devices
-- **Modern Interface:** Clean, intuitive design using Shadcn UI components
-- **Real-Time Feedback:** Instant validation messages and error handling
-- **Loading States:** Smooth loading indicators and skeleton screens
-- **Toast Notifications:** User-friendly feedback for all actions
-
-## 📝 License
+## License
 
 This project is licensed under the MIT License.
 
-## 👨‍💻 Author
+## Author
 
-Built with ❤️ using Next.js, TypeScript, and Shadcn UI
+Built with love using Next.js, TypeScript, and shadcn/ui.
