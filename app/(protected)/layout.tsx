@@ -1,22 +1,22 @@
 "use client";
-
 import { usePermissions } from "@/lib/usePermissions";
 import {
-    BarChart3,
-    CheckSquare,
-    LayoutDashboard,
-    LogOut,
-    Menu,
-    Settings,
-    Shield,
-    Target,
-    Users,
-    X,
+  BarChart3,
+  CheckSquare,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Settings,
+  Shield,
+  Target,
+  Users,
+  X,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import logo from "@/public/asset/logo/logo.png";
 interface SidebarLink {
   href: string;
   label: string;
@@ -94,7 +94,7 @@ export default function ProtectedLayout({
 
   // Filter navlinks based on user permissions
   const visibleLinks = sidebarLinks.filter((link) =>
-    permissions.hasPermission(link.requiredAtom)
+    permissions.hasPermission(link.requiredAtom),
   );
 
   return (
@@ -114,11 +114,7 @@ export default function ProtectedLayout({
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
           >
-            {sidebarOpen ? (
-              <X size={20} />
-            ) : (
-              <Menu size={20} />
-            )}
+            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -131,8 +127,12 @@ export default function ProtectedLayout({
               className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors group"
               title={sidebarOpen ? "" : link.label}
             >
-              <span className="flex-shrink-0 text-gray-400 group-hover:text-orange-600">{link.icon}</span>
-              {sidebarOpen && <span className="text-sm font-medium">{link.label}</span>}
+              <span className="flex-shrink-0 text-gray-400 group-hover:text-orange-600">
+                {link.icon}
+              </span>
+              {sidebarOpen && (
+                <span className="text-sm font-medium">{link.label}</span>
+              )}
             </Link>
           ))}
         </nav>
@@ -144,7 +144,10 @@ export default function ProtectedLayout({
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors group"
             title={sidebarOpen ? "" : "Logout"}
           >
-            <LogOut size={20} className="text-gray-400 group-hover:text-red-600" />
+            <LogOut
+              size={20}
+              className="text-gray-400 group-hover:text-red-600"
+            />
             {sidebarOpen && <span className="text-sm font-medium">Logout</span>}
           </button>
         </div>
@@ -156,7 +159,9 @@ export default function ProtectedLayout({
         <div className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between shadow-sm">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Obliq Platform</h2>
-            <p className="text-sm text-gray-500">Welcome back to your dashboard</p>
+            <p className="text-sm text-gray-500">
+              Welcome back to your dashboard
+            </p>
           </div>
           <div className="flex items-center space-x-4">
             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-sm">
@@ -171,9 +176,7 @@ export default function ProtectedLayout({
 
         {/* Page Content */}
         <main className="flex-1 overflow-auto p-8">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
+          <div className="max-w-7xl mx-auto">{children}</div>
         </main>
       </div>
     </div>
