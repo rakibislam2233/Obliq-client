@@ -3,6 +3,7 @@ import { AuthActionState, loginUser } from "@/services/auth.service";
 import { Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "radix-ui";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -38,7 +39,7 @@ export default function LoginForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Login</h1>
         <p className="text-sm text-gray-500">Enter your details to continue</p>
@@ -92,6 +93,7 @@ export default function LoginForm() {
 
         {/* Forgot Password */}
         <div className="text-right">
+
           <Link
             href="/forgot-password"
             className="text-sm text-orange-500 hover:text-orange-600 font-medium"

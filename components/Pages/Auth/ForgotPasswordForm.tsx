@@ -37,7 +37,7 @@ export default function ForgotPasswordForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full max-w-md">
+        <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
       {/* Heading */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Forgot Password</h1>

@@ -39,7 +39,7 @@ export default function ResetPasswordForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full max-w-md mx-auto p-8 border border-gray-100 bg-white rounded">
+    <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
       <div className="flex flex-col items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Reset Password
