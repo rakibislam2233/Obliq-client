@@ -61,22 +61,22 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Track your business metrics and performance</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-2">Track your business metrics and performance</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat) => {
           const Icon = stat.icon;
           const colors = getColorClasses(stat.color);
           return (
             <div
               key={stat.label}
-              className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-xl p-4 sm:p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-gray-600 text-sm font-medium">{stat.label}</h3>
@@ -98,28 +98,28 @@ export default function DashboardPage() {
       </div>
 
       {/* Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Chart Section */}
-        <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-          <div className="mb-6">
+        <div className="lg:col-span-2 bg-white rounded-xl p-4 sm:p-6 border border-gray-100 shadow-sm">
+          <div className="mb-4 sm:mb-6">
             <h2 className="text-lg font-bold text-gray-900">Revenue Trend</h2>
-            <p className="text-sm text-gray-600 mt-1">Last 12 months performance</p>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">Last 12 months performance</p>
           </div>
-          <div className="h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center text-gray-400">
-            <p className="text-center">
-              <BarChart3 className="w-12 h-12 mx-auto mb-2 opacity-50" />
+          <div className="h-48 sm:h-64 lg:h-80 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+            <p className="text-center text-sm sm:text-base">
+              <BarChart3 className="w-8 sm:w-12 h-8 sm:h-12 mx-auto mb-2 opacity-50" />
               Chart visualization
             </p>
           </div>
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-          <h2 className="text-lg font-bold text-gray-900 mb-6">Recent Activity</h2>
-          <div className="space-y-4">
+        <div className="bg-white rounded-xl p-4 sm:p-6 border border-gray-100 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 sm:mb-6">Recent Activity</h2>
+          <div className="space-y-3 sm:space-y-4">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="pb-4 border-b border-gray-100 last:border-b-0">
-                <p className="text-sm font-medium text-gray-900">New user registered</p>
+              <div key={item} className="pb-3 sm:pb-4 border-b border-gray-100 last:border-b-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-900">New user registered</p>
                 <p className="text-xs text-gray-500 mt-1">2 hours ago</p>
               </div>
             ))}
@@ -128,26 +128,26 @@ export default function DashboardPage() {
       </div>
 
       {/* Bottom Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-8 text-white shadow-lg">
-          <h3 className="text-2xl font-bold mb-2">Quick Actions</h3>
-          <p className="text-orange-100 text-sm mb-6">Get started with these common tasks</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 sm:p-8 text-white shadow-lg">
+          <h3 className="text-xl sm:text-2xl font-bold mb-2">Quick Actions</h3>
+          <p className="text-orange-100 text-xs sm:text-sm mb-4 sm:mb-6">Get started with these common tasks</p>
           <div className="space-y-2">
-            <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm text-left">
+            <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-medium py-2 px-3 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm text-left">
               → Create New User
             </button>
-            <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm text-left">
+            <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-medium py-2 px-3 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm text-left">
               → Add New Lead
             </button>
-            <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm text-left">
+            <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-medium py-2 px-3 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm text-left">
               → Create Task
             </button>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-8 border border-gray-100 shadow-sm">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Need Help?</h3>
-          <p className="text-gray-600 text-sm mb-6">Check our documentation or contact support</p>
+        <div className="bg-white rounded-xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Need Help?</h3>
+          <p className="text-gray-600 text-xs sm:text-sm mb-4 sm:mb-6">Check our documentation or contact support</p>
           <div className="space-y-2">
             <button className="w-full border border-gray-200 hover:bg-gray-50 text-gray-900 font-medium py-2 px-4 rounded-lg transition-colors text-sm text-left">
               → View Documentation
