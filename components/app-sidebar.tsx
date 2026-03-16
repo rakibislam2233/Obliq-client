@@ -1,29 +1,27 @@
 "use client";
 
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarProvider,
-    SidebarTrigger,
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { usePermissions } from "@/lib/usePermissions";
 import logo from "@/public/asset/logo/logo.png";
 import {
-    BarChart3,
-    CheckSquare,
-    LayoutDashboard,
-    LogOut,
-    Settings,
-    Shield,
-    Target,
-    Users,
+  BarChart3,
+  CheckSquare,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  Shield,
+  Target,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -81,7 +79,7 @@ const sidebarLinks: SidebarLink[] = [
   },
 ];
 
-function SidebarNav() {
+export function AppSidebar() {
   const router = useRouter();
   const permissions = usePermissions();
 
@@ -105,14 +103,16 @@ function SidebarNav() {
   );
 
   return (
-    <>
-      <SidebarHeader className="px-0">
-        <div className="px-4 py-4 border-b border-gray-200">
+    <Sidebar>
+      {/* Sidebar Header - Logo */}
+      <SidebarHeader className="border-b border-gray-200">
+        <div className="px-2 py-4">
           <Image src={logo} alt="Obliq" className="h-8 w-auto" priority />
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
+      {/* Sidebar Content - Navigation */}
+      <SidebarContent className="flex flex-col flex-1">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -120,7 +120,9 @@ function SidebarNav() {
                 <SidebarMenuItem key={link.href}>
                   <SidebarMenuButton asChild>
                     <Link href={link.href} className="flex items-center gap-3">
-                      {link.icon}
+                      <div className="flex items-center justify-center w-5 h-5">
+                        {link.icon}
+                      </div>
                       <span>{link.label}</span>
                     </Link>
                   </SidebarMenuButton>
@@ -131,30 +133,16 @@ function SidebarNav() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      {/* Sidebar Footer - Logout */}
+      <SidebarFooter className="border-t border-gray-200">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors border-t border-gray-200 mt-auto"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
         >
           <LogOut size={20} />
           <span>Logout</span>
         </button>
       </SidebarFooter>
-    </>
-  );
-}
-
-export default function ResponsiveSidebar() {
-  return (
-    <SidebarProvider>
-      <Sidebar className="hidden lg:flex">
-        <SidebarNav />
-      </Sidebar>
-
-      {/* Mobile trigger button */}
-      <div className="lg:hidden fixed bottom-6 right-6 z-40">
-        <SidebarTrigger className="w-12 h-12 bg-orange-600 hover:bg-orange-700 text-white rounded-lg shadow-lg p-0" />
-      </div>
-    </SidebarProvider>
+    </Sidebar>
   );
 }
