@@ -16,7 +16,7 @@ import logo from "@/public/asset/logo/logo.png";
 import {
     BarChart3,
     CheckSquare,
-    ChevronLeft,
+    ChevronsLeft,
     LayoutDashboard,
     LogOut,
     Settings,
@@ -116,10 +116,10 @@ export function AppSidebar() {
         />
         <button
           onClick={toggleSidebar}
-          className="hidden md:flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors shrink-0 group-data-[collapsible=icon]:hidden"
-          title="Toggle Sidebar (Ctrl+B)"
+          className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors shrink-0 group-data-[collapsible=icon]:hidden"
+          title="Collapse Sidebar (Ctrl+B)"
         >
-          <ChevronLeft className="w-5 h-5 text-gray-600" />
+          <ChevronsLeft className="w-4 h-4 text-gray-600" />
         </button>
       </SidebarHeader>
 

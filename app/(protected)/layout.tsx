@@ -8,13 +8,13 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="bg-[#F8E0D4]">
       <AppSidebar />
-      <main className="flex-1 flex flex-col overflow-hidden bg-gray-50 w-full">
+      <main className="flex-1 flex flex-col overflow-hidden w-full">
         <Topbar />
 
         {/* Page Content */}
-        <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
+        <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 bg-white">
           <div className="max-w-7xl mx-auto">{children}</div>
         </div>
       </main>

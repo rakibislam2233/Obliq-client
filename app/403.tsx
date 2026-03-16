@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Forbidden() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
       <div className="max-w-md w-full mx-auto px-6">
         <div className="text-center space-y-6">
           {/* Status Code */}
