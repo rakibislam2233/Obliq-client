@@ -29,7 +29,7 @@ export default function ForgotPasswordForm() {
       toast.success(
         state?.message || "Password reset link sent to your email!",
       );
-    } else if (state?.message && !state?.success) {
+    } else if (state?.message && !state?.errors) {
       toast.error(state?.message);
     }
   }, [state]);
