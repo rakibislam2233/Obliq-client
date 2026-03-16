@@ -102,16 +102,14 @@ export default function LoginForm() {
         {/* Login Button */}
         <Button
           type="submit"
-          className="w-full mt-2"
           disabled={isPending}
-          className="w-full h-10 bg-primary border-2 border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer rounded-[12px] shadow-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6  group gap-0"
+          className="w-full h-10 sm:h-11 bg-primary border-2 border-primary text-white hover:bg-orange-600 rounded-[12px] transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-4 sm:mt-6 group flex items-center justify-center gap-2"
         >
-          <span className="group-hover:-translate-x-3 transition-transform duration-200 flex items-center gap-2">
-            {" "}
+          <span className="group-hover:-translate-x-1 transition-transform duration-200">
             {isPending ? "Logging in..." : "Log in"}
           </span>
           <ArrowRight
-            className="opacity-0 group-hover:opacity-100 transition-opacity"
+            className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-4 h-4"
             size={18}
           />
         </Button>

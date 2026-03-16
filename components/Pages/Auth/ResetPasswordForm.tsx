@@ -76,7 +76,7 @@ export default function ResetPasswordForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full bg-primary text-white rounded h-11 sm:h-12 text-sm sm:text-base font-semibold shadow-none hover:bg-primary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-primary text-white rounded-[12px] h-10 sm:h-11 text-sm sm:text-base font-semibold hover:bg-orange-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed border-2 border-primary"
         >
           {isPending ? "Resetting..." : "Reset Password"}
         </Button>
