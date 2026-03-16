@@ -1,27 +1,28 @@
 "use client";
-
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    useSidebar
 } from "@/components/ui/sidebar";
 import { usePermissions } from "@/lib/usePermissions";
 import logo from "@/public/asset/logo/logo.png";
 import {
-  BarChart3,
-  CheckSquare,
-  LayoutDashboard,
-  LogOut,
-  Settings,
-  Shield,
-  Target,
-  Users,
+    BarChart3,
+    CheckSquare,
+    ChevronLeft,
+    LayoutDashboard,
+    LogOut,
+    Settings,
+    Shield,
+    Target,
+    Users
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -82,6 +83,7 @@ const sidebarLinks: SidebarLink[] = [
 export function AppSidebar() {
   const router = useRouter();
   const permissions = usePermissions();
+  const { toggleSidebar } = useSidebar();
 
   const handleLogout = async () => {
     try {
@@ -103,12 +105,22 @@ export function AppSidebar() {
   );
 
   return (
-    <Sidebar>
-      {/* Sidebar Header - Logo */}
-      <SidebarHeader className="border-b border-gray-200">
-        <div className="px-2 py-4">
-          <Image src={logo} alt="Obliq" className="h-8 w-auto" priority />
-        </div>
+    <Sidebar collapsible="icon">
+      {/* Sidebar Header - Logo & Toggle */}
+      <SidebarHeader className="border-b border-gray-200 flex items-center justify-between px-2 py-4">
+        <Image 
+          src={logo} 
+          alt="Obliq" 
+          className="h-8 w-auto group-data-[collapsible=icon]:h-6"
+          priority 
+        />
+        <button
+          onClick={toggleSidebar}
+          className="hidden md:flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors shrink-0 group-data-[collapsible=icon]:hidden"
+          title="Toggle Sidebar (Ctrl+B)"
+        >
+          <ChevronLeft className="w-5 h-5 text-gray-600" />
+        </button>
       </SidebarHeader>
 
       {/* Sidebar Content - Navigation */}
@@ -119,11 +131,11 @@ export function AppSidebar() {
               {visibleLinks.map((link) => (
                 <SidebarMenuItem key={link.href}>
                   <SidebarMenuButton asChild>
-                    <Link href={link.href} className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-5 h-5">
-                        {link.icon}
-                      </div>
-                      <span>{link.label}</span>
+                    <Link href={link.href}>
+                      {link.icon}
+                      <span className="group-data-[collapsible=icon]:hidden">
+                        {link.label}
+                      </span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -135,13 +147,15 @@ export function AppSidebar() {
 
       {/* Sidebar Footer - Logout */}
       <SidebarFooter className="border-t border-gray-200">
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
-        >
-          <LogOut size={20} />
-          <span>Logout</span>
-        </button>
+        <SidebarMenuButton asChild>
+          <button
+            onClick={handleLogout}
+            className="w-full hover:bg-red-50 hover:text-red-600 transition-colors"
+          >
+            <LogOut />
+            <span className="group-data-[collapsible=icon]:hidden">Logout</span>
+          </button>
+        </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>
   );
