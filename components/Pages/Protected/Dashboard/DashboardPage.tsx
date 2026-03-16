@@ -149,10 +149,10 @@ export default function DashboardPage() {
           <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Need Help?</h3>
           <p className="text-gray-600 text-xs sm:text-sm mb-4 sm:mb-6">Check our documentation or contact support</p>
           <div className="space-y-2">
-            <button className="w-full border border-gray-200 hover:bg-gray-50 text-gray-900 font-medium py-2 px-4 rounded-lg transition-colors text-sm text-left">
+            <button className="w-full border border-gray-200 hover:bg-gray-50 text-gray-900 font-medium py-2 px-3 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm text-left">
               → View Documentation
             </button>
-            <button className="w-full border border-gray-200 hover:bg-gray-50 text-gray-900 font-medium py-2 px-4 rounded-lg transition-colors text-sm text-left">
+            <button className="w-full border border-gray-200 hover:bg-gray-50 text-gray-900 font-medium py-2 px-3 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm text-left">
               → Contact Support
             </button>
           </div>
