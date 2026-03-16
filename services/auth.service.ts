@@ -64,10 +64,14 @@ export async function loginUser(
     if (loginData?.permissions && Array.isArray(loginData.permissions)) {
       await storeUserPermissions(loginData.permissions);
     }
+    
     return {
       success: true,
       message: res.message || "Logged in successfully",
-      data: loginData,
+      data: {
+        ...loginData,
+        redirect: "/dashboard",
+      },
       timestamp: Date.now(),
     };
   } catch (error: any) {

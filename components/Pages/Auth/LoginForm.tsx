@@ -1,9 +1,7 @@
 "use client";
-import Logo from "@/components/Shared/Navbar/Logo";
-import { Button } from "@/components/ui/button";
-import { FormInput } from "@/components/ui/form-input";
 import { AuthActionState, loginUser } from "@/services/auth.service";
 import { Lock, Mail } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
@@ -41,72 +39,106 @@ export default function LoginForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full max-w-md mx-auto p-10 md:p-12 border border-gray-100 bg-white shadow-none rounded">
-      <div className="flex flex-col items-center mb-10">
-        <Link href="/" className="flex items-center justify-center gap-1 mb-6">
-          <Logo />
-        </Link>
-        <h1 className="text-3xl font-black text-[#25324B] mb-2  tracking-tighter">
-          Welcome <span className="text-primary ">Back</span>
-        </h1>
-        <p className="text-sm text-gray-400 font-medium text-center">
-          Login to access your secure file management dashboard.
-        </p>
+    <div className="flex min-h-screen bg-white">
+      {/* Left Side - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 lg:px-12">
+        <div className="w-full max-w-md">
+          {/* Logo */}
+          <div className="mb-8">
+            <div className="text-2xl font-bold text-orange-500 flex items-center gap-2">
+              <div className="w-8 h-8 bg-orange-500 rounded"></div>
+              <span>Obliq</span>
+            </div>
+          </div>
+
+          {/* Heading */}
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Login</h1>
+            <p className="text-sm text-gray-500">Enter your details to continue</p>
+          </div>
+
+          {/* Form */}
+          <form action={formAction} className="space-y-5">
+            {/* Email Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  defaultValue={state?.inputs?.email ?? ""}
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                  required
+                />
+              </div>
+              {state?.errors?.email && (
+                <p className="text-red-500 text-sm mt-1">{state.errors.email[0]}</p>
+              )}
+            </div>
+
+            {/* Password Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  defaultValue={state?.inputs?.password ?? ""}
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                  required
+                />
+              </div>
+              {state?.errors?.password && (
+                <p className="text-red-500 text-sm mt-1">{state.errors.password[0]}</p>
+              )}
+            </div>
+
+            {/* Forgot Password */}
+            <div className="text-right">
+              <Link href="/forgot-password" className="text-sm text-orange-500 hover:text-orange-600 font-medium">
+                Forgot password?
+              </Link>
+            </div>
+
+            {/* Login Button */}
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPending ? "Logging in..." : "Log in"}
+            </button>
+          </form>
+
+          {/* Sign Up Link */}
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link href="/register" className="text-orange-500 hover:text-orange-600 font-semibold">
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
 
-      <form action={formAction} className="space-y-6">
-        <FormInput
-          id="email"
-          name="email"
-          type="email"
-          label="Email Address"
-          icon={Mail}
-          defaultValue={state?.inputs?.email ?? undefined}
-          placeholder="Enter your email"
-          error={state?.errors?.email}
-          required
+      {/* Right Side - Image Background (Hidden on mobile) */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-orange-400 via-yellow-300 to-red-500">
+        <Image
+          src="/asset/images/background.png"
+          alt="Login Background"
+          fill
+          className="object-cover"
+          priority
         />
-
-        <FormInput
-          id="password"
-          name="password"
-          type="password"
-          label="Password"
-          icon={Lock}
-          defaultValue={state?.inputs?.password ?? undefined}
-          placeholder="Enter your password"
-          error={state?.errors?.password}
-          required
-        />
-        {/* Forgot password link */}
-        <div className="text-right">
-          <Link
-            href="/forgot-password"
-            className="text-xs text-primary font-medium hover:underline"
-          >
-            Forgot Password?
-          </Link>
-        </div>
-
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="w-full bg-primary text-white rounded h-12 text-xs font-bold  tracking-widest shadow-none hover:bg-primary/90 transition-all active:scale-[0.98] mt-4 cursor-pointer"
-        >
-          {isPending ? "Authenticating..." : "Login to Dashboard"}
-        </Button>
-      </form>
-
-      <div className="mt-8 text-center sm:flex sm:items-center sm:justify-center sm:gap-2">
-        <p className="text-xs text-gray-400 font-medium">
-          Don&apos;t have an account?
-        </p>
-        <Link
-          href="/register"
-          className="text-xs font-bold text-primary  tracking-widest hover:underline"
-        >
-          Create Account
-        </Link>
       </div>
     </div>
   );
