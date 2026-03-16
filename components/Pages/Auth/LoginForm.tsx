@@ -41,14 +41,18 @@ export default function LoginForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
-      <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Login</h1>
-        <p className="text-sm text-gray-500">Enter your details to continue</p>
+    <div className="w-full bg-white rounded-[20px] p-6 sm:p-8 lg:p-10 shadow-blue-50">
+      <div className="mb-6 sm:mb-8 text-center">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+          Login
+        </h1>
+        <p className="text-xs sm:text-sm text-gray-500">
+          Enter your details to continue
+        </p>
       </div>
 
       {/* Form */}
-      <form action={formAction} className="space-y-5">
+      <form action={formAction} className="space-y-4 sm:space-y-5">
         {/* Email Input */}
         <FormInput
           id="email"
@@ -76,7 +80,7 @@ export default function LoginForm() {
         />
 
         {/* Forgot Password */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
           <div className="flex gap-2 items-center">
             <Checkbox
               id="remember"
@@ -98,6 +102,7 @@ export default function LoginForm() {
         {/* Login Button */}
         <Button
           type="submit"
+          className="w-full mt-2"
           disabled={isPending}
           className="w-full h-10 bg-primary border-2 border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer rounded-[12px] shadow-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6  group gap-0"
         >
@@ -111,19 +116,6 @@ export default function LoginForm() {
           />
         </Button>
       </form>
-
-      {/* Sign Up Link */}
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/register"
-            className="text-orange-500 hover:text-orange-600 font-semibold"
-          >
-            Sign up
-          </Link>
-        </p>
-      </div>
     </div>
   );
 }

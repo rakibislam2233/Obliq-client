@@ -44,19 +44,19 @@ export default function ForgotPasswordForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
+    <div className="w-full bg-white rounded-[20px] p-6 sm:p-8 lg:p-10 shadow-blue-50">
       {/* Heading */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
           Forgot Password
         </h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-xs sm:text-sm text-gray-500">
           Enter your email and we&apos;ll send you a reset link
         </p>
       </div>
 
       {/* Form */}
-      <form action={action} className="space-y-5">
+      <form action={action} className="space-y-4 sm:space-y-5">
         {/* Email Input */}
         <FormInput
           id="email"
@@ -73,7 +73,7 @@ export default function ForgotPasswordForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full h-10 bg-primary border-2 border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer rounded-[12px] shadow-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6  group gap-0"
+          className="w-full h-10 sm:h-11 bg-primary border-2 border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer rounded-[12px] shadow-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-4 sm:mt-6 group gap-0 text-sm sm:text-base"
         >
           <span className="group-hover:-translate-x-3 transition-transform duration-200 flex items-center gap-2">
             {" "}

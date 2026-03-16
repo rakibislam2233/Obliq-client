@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
 import { AuthActionState, resetPassword } from "@/services/auth.service";
 import { Lock } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
@@ -39,17 +38,17 @@ export default function ResetPasswordForm() {
   }, [state, router]);
 
   return (
-    <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
-      <div className="flex flex-col items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+    <div className="w-full bg-white rounded-[20px] p-6 sm:p-8 lg:p-10 shadow-blue-50">
+      <div className="flex flex-col items-center mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
           Reset Password
         </h1>
-        <p className="text-sm text-gray-500 text-center">
+        <p className="text-xs sm:text-sm text-gray-500 text-center">
           Please enter your new password below.
         </p>
       </div>
 
-      <form action={action} className="space-y-6">
+      <form action={action} className="space-y-4 sm:space-y-6">
         <FormInput
           id="password"
           name="password"
@@ -77,7 +76,7 @@ export default function ResetPasswordForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full bg-primary text-white rounded h-12 text-base font-semibold shadow-none hover:bg-primary"
+          className="w-full bg-primary text-white rounded h-11 sm:h-12 text-sm sm:text-base font-semibold shadow-none hover:bg-primary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? "Resetting..." : "Reset Password"}
         </Button>
