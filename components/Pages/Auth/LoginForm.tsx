@@ -1,10 +1,12 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormInput } from "@/components/ui/form-input";
 import { AuthActionState, loginUser } from "@/services/auth.service";
-import { Lock, Mail } from "lucide-react";
+import { ArrowRight, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Arrow } from "radix-ui/internal";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -41,7 +43,7 @@ export default function LoginForm() {
 
   return (
     <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Login</h1>
         <p className="text-sm text-gray-500">Enter your details to continue</p>
       </div>
@@ -76,11 +78,15 @@ export default function LoginForm() {
 
         {/* Forgot Password */}
         <div className="flex items-center justify-between">
-          <div className="flex gap-1 items-center">
-          <Checkbox id="remember" name="remember" className="mr-1" />
-          <label htmlFor="remember" className="text-sm text-gray-600">
-            Remember me
-          </label>
+          <div className="flex gap-2 items-center">
+            <Checkbox
+              id="remember"
+              name="remember"
+              className="cursor-pointer"
+            />
+            <label htmlFor="remember" className="text-sm text-gray-600">
+              Remember me
+            </label>
           </div>
           <Link
             href="/forgot-password"
@@ -91,13 +97,20 @@ export default function LoginForm() {
         </div>
 
         {/* Login Button */}
-        <button
+        <Button
           type="submit"
           disabled={isPending}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+          className="w-full h-10 bg-primary border-2 border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer rounded-[12px] shadow-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6  group gap-0"
         >
-          {isPending ? "Logging in..." : "Log in"}
-        </button>
+          <span className="group-hover:-translate-x-3 transition-transform duration-200 flex items-center gap-2">
+            {" "}
+            {isPending ? "Logging in..." : "Log in"}
+          </span>
+          <ArrowRight
+            className="opacity-0 group-hover:opacity-100 transition-opacity"
+            size={18}
+          />
+        </Button>
       </form>
 
       {/* Sign Up Link */}

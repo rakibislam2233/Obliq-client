@@ -1,6 +1,8 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { FormInput } from "@/components/ui/form-input";
 import { AuthActionState, forgotPassword } from "@/services/auth.service";
-import { Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
@@ -15,13 +17,18 @@ const initialState: AuthActionState = {
 };
 
 export default function ForgotPasswordForm() {
-  const [state, action, isPending] = useActionState(forgotPassword, initialState);
+  const [state, action, isPending] = useActionState(
+    forgotPassword,
+    initialState,
+  );
   const router = useRouter();
 
   // Show toast messages based on form state
   useEffect(() => {
     if (state?.success) {
-      toast.success(state?.message || "Password reset link sent to your email!");
+      toast.success(
+        state?.message || "Password reset link sent to your email!",
+      );
     } else if (state?.message && !state?.success) {
       toast.error(state?.message);
     }
@@ -37,51 +44,56 @@ export default function ForgotPasswordForm() {
   }, [state, router]);
 
   return (
-        <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
+    <div className="w-full bg-white rounded-[20px] p-8 lg:p-10 shadow-blue-50">
       {/* Heading */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Forgot Password</h1>
-        <p className="text-sm text-gray-500">Enter your email and we'll send you a reset link</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          Forgot Password
+        </h1>
+        <p className="text-sm text-gray-500">
+          Enter your email and we'll send you a reset link
+        </p>
       </div>
 
       {/* Form */}
       <form action={action} className="space-y-5">
         {/* Email Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
-            <input
-              type="email"
-              name="email"
-              placeholder="your@email.com"
-              defaultValue={state?.inputs?.email ?? ""}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-              required
-            />
-          </div>
-          {state?.errors?.email && (
-            <p className="text-red-500 text-sm mt-1">{state.errors.email[0]}</p>
-          )}
-        </div>
+        <FormInput
+          id="email"
+          name="email"
+          type="email"
+          label="Email"
+          icon={Mail}
+          defaultValue={state?.inputs?.email ?? undefined}
+          placeholder="Enter your email"
+          error={state?.errors?.email}
+          required
+        />
 
-        {/* Submit Button */}
-        <button
+        <Button
           type="submit"
           disabled={isPending}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+          className="w-full h-10 bg-primary border-2 border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer rounded-[12px] shadow-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6  group gap-0"
         >
-          {isPending ? "Sending..." : "Send Reset Link"}
-        </button>
+          <span className="group-hover:-translate-x-3 transition-transform duration-200 flex items-center gap-2">
+            {" "}
+            {isPending ? "Sending..." : "Send Reset Link"}
+          </span>
+          <ArrowRight
+            className="opacity-0 group-hover:opacity-100 transition-opacity"
+            size={18}
+          />
+        </Button>
       </form>
 
       {/* Back to Login */}
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
           Remembered your password?{" "}
-          <Link href="/login" className="text-orange-500 hover:text-orange-600 font-semibold">
+          <Link
+            href="/login"
+            className="text-orange-500 hover:text-orange-600 font-semibold"
+          >
             Back to Login
           </Link>
         </p>
