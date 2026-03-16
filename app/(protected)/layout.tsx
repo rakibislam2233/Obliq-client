@@ -98,21 +98,21 @@ export default function ProtectedLayout({
   );
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
       <div
         className={`${
-          sidebarOpen ? "w-64" : "w-20"
-        } bg-gray-900 text-white transition-all duration-300 flex flex-col overflow-y-auto`}
+          sidebarOpen ? "w-72" : "w-24"
+        } bg-white border-r border-gray-200 transition-all duration-300 flex flex-col overflow-y-auto shadow-sm`}
       >
         {/* Logo/Header */}
-        <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+        <div className="p-6 border-b border-gray-100 flex items-center justify-between gap-3">
           {sidebarOpen && (
-            <h1 className="text-xl font-bold text-blue-400">Obliq</h1>
+            <Image src={logo} alt="Obliq" className="h-8 w-auto" priority />
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-1 hover:bg-gray-800 rounded"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
           >
             {sidebarOpen ? (
               <X size={20} />
@@ -123,28 +123,28 @@ export default function ProtectedLayout({
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-1">
           {visibleLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors group"
               title={sidebarOpen ? "" : link.label}
             >
-              <span className="flex-shrink-0">{link.icon}</span>
+              <span className="flex-shrink-0 text-gray-400 group-hover:text-orange-600">{link.icon}</span>
               {sidebarOpen && <span className="text-sm font-medium">{link.label}</span>}
             </Link>
           ))}
         </nav>
 
         {/* Logout Button */}
-        <div className="p-4 border-t border-gray-700">
+        <div className="p-4 border-t border-gray-100">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors text-red-400 hover:text-red-300"
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors group"
             title={sidebarOpen ? "" : "Logout"}
           >
-            <LogOut size={20} />
+            <LogOut size={20} className="text-gray-400 group-hover:text-red-600" />
             {sidebarOpen && <span className="text-sm font-medium">Logout</span>}
           </button>
         </div>
@@ -153,19 +153,27 @@ export default function ProtectedLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-gray-800 font-semibold">Obliq Platform</h2>
+        <div className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between shadow-sm">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Obliq Platform</h2>
+            <p className="text-sm text-gray-500">Welcome back to your dashboard</p>
+          </div>
           <div className="flex items-center space-x-4">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-sm">
+              U
+            </div>
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">User Name</p>
-              <p className="text-xs text-gray-500">Online</p>
+              <p className="text-sm font-semibold text-gray-900">User Name</p>
+              <p className="text-xs text-green-600 font-medium">● Online</p>
             </div>
           </div>
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-auto p-6">
-          {children}
+        <main className="flex-1 overflow-auto p-8">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>

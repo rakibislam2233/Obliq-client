@@ -6,7 +6,6 @@ import { AuthActionState, loginUser } from "@/services/auth.service";
 import { ArrowRight, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Arrow } from "radix-ui/internal";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -116,7 +115,7 @@ export default function LoginForm() {
       {/* Sign Up Link */}
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/register"
             className="text-orange-500 hover:text-orange-600 font-semibold"
