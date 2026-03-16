@@ -2,10 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-/**
- * Hook to check permissions on the client side
- * Reads from the userPermissions cookie
- */
+// Custom hook to manage user permissions on the client side
 export function usePermissions() {
   const [permissions, setPermissions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
